@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gray.renaboard.mappers.article.ArticleMapper">
-    <insert id="create">
-        INSERT INTO tbl_article (article_no, title, content, writer, regdate, viewcnt)
-         VALUES (#{articleNo}, #{title}, #{content}, #{writer}, #{regDate}, #{viewCnt})
+    <insert id="create" useGeneratedKeys="true" keyProperty="articleNo">
+        INSERT INTO tbl_article (title, content, writer, regdate, viewcnt)
+         VALUES (#{title}, #{content}, #{writer}, NOW(), #{viewCnt})
     </insert>
 
     <select id="read" resultMap="ArticleResultMap">

@@ -1,0 +1,13 @@
+package com.gray.renaboard.article.service;
+
+import com.gray.renaboard.article.domain.ArticleVO;
+
+import java.util.List;
+
+public interface ArticleService {
+    public void create(ArticleVO articleVO) throws Exception;
+    public ArticleVO read(Integer articleNo) throws Exception;
+    public void update(ArticleVO articleVO) throws Exception;
+    public void delele(Integer articleNo) throws Exception;
+    public List<ArticleVO> listAll() throws Exception;
+}

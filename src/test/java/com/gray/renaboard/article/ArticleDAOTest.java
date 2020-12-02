@@ -33,4 +33,18 @@ public class ArticleDAOTest {
     public void testRead() throws Exception {
         logger.info(articleDAO.read(1).toString());
     }
+
+    @Test
+    public void testUpdate() throws Exception {
+        ArticleVO article = new ArticleVO();
+        article.setArticleNo(1);
+        article.setTitle("글 수정 테스트 제목");
+        article.setContent("글 수정 테스트 내용");
+        articleDAO.update(article);
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        articleDAO.delete(1);
+    }
 }

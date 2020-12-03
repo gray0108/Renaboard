@@ -2,6 +2,7 @@ package com.gray.renaboard.article.service;
 
 import com.gray.renaboard.article.domain.ArticleVO;
 import com.gray.renaboard.article.persistence.ArticleDAO;
+import com.gray.renaboard.commons.paging.Criteria;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -39,5 +40,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleVO> listAll() throws Exception {
         return articleDAO.listAll();
+    }
+
+    @Override
+    public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
+        return articleDAO.listCriteria(criteria);
     }
 }

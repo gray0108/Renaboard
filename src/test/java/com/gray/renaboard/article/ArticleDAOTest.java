@@ -2,6 +2,7 @@ package com.gray.renaboard.article;
 
 import com.gray.renaboard.article.domain.ArticleVO;
 import com.gray.renaboard.article.persistence.ArticleDAO;
+import com.gray.renaboard.commons.paging.Criteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring-config/applicationContext.xml"})
@@ -46,5 +48,40 @@ public class ArticleDAOTest {
     @Test
     public void testDelete() throws Exception {
         articleDAO.delete(1);
+    }
+
+
+    @Test/* 페이징 처리 확인을 위해 테이블에 데이터 삽입하기 */
+    public void createDummy() throws Exception{
+        for (int i =1; i<= 400; i++) {
+            ArticleVO articleVO = new ArticleVO();
+            articleVO.setTitle("무케의 모험 "+i+"편");
+            articleVO.setContent(i+" 권에 대한 내용입니다.");
+            articleVO.setWriter("여우작가0"+(i%10));
+
+            articleDAO.create(articleVO);
+        }
+    }
+
+    @Test
+    public void testListPaging() throws Exception {
+        int page = 3;
+        List<ArticleVO> articles = articleDAO.listPaging(page);
+
+        for (ArticleVO article : articles) {
+            logger.info(article.getArticleNo()+":"+article.getTitle());
+        }
+    }
+
+    @Test
+    public void testListCriteria() throws Exception {
+        Criteria criteria = new Criteria();
+        criteria.setPage(4);
+        criteria.setPerPageNum(20);
+
+        List<ArticleVO> articles = articleDAO.listCriteria(criteria);
+        for (ArticleVO article : articles) {
+            logger.info(article.getArticleNo() + " : " + article.getTitle());
+        }
     }
 }

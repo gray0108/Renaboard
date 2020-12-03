@@ -2,6 +2,8 @@ package com.gray.renaboard.article.controller;
 
 import com.gray.renaboard.article.domain.ArticleVO;
 import com.gray.renaboard.article.service.ArticleService;
+import com.gray.renaboard.commons.paging.Criteria;
+import com.gray.renaboard.commons.paging.PageMaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -84,4 +86,24 @@ public class ArticleController {
         return "redirect:/article/list";
     }
 
+    @RequestMapping(value = "/listCriteria", method = RequestMethod.GET)
+    public String listCriteria(Model model, Criteria criteria) throws Exception {
+        logger.info("listCriteria...");
+        model.addAttribute("articles", articleService.listCriteria(criteria));
+        return "/article/list_criteria";
+    }
+
+    @RequestMapping(value = "/listPaging", method = RequestMethod.GET)
+    public String listPaging(Model model, Criteria criteria) throws Exception {
+        logger.info("listPaging...");
+
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(criteria);
+        pageMaker.setTotalCount(1000);
+
+        model.addAttribute("articles", articleService.listCriteria(criteria));
+        model.addAttribute("pageMaker", pageMaker);
+
+        return "/article/list_paging";
+    }
 }

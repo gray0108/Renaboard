@@ -31,6 +31,20 @@
         ]]>
     </select>
 
+    <select id="listPaging" resultMap="ArticleResultMap">
+        <![CDATA[
+        SELECT article_no, title, content, writer, regdate, viewcnt
+         FROM tbl_article WHERE article_no > 0 ORDER BY article_no DESC, regdate DESC LIMIT #{page}, 10
+        ]]>
+    </select>
+
+    <select id="listCriteria" resultMap="ArticleResultMap">
+        <![CDATA[
+        SELECT article_no, title, content, writer, regdate, viewcnt
+         FROM tbl_article WHERE article_no > 0 ORDER BY article_no DESC, regdate DESC LIMIT #{pageStart}, #{perPageNum}
+        ]]>
+    </select>
+
     <!-- VO의 필드변수명과, DB의 칼럼명이 다를때 처리방법 -->
     <resultMap id="ArticleResultMap" type="ArticleVO">
         <id property="articleNo" column="article_no"/>

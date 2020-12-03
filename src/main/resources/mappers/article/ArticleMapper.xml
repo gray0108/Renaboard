@@ -24,7 +24,7 @@
          WHERE article_no = #{articleNo}
     </delete>
 
-    <select id="listAll" resultType="ArticleVO">
+    <select id="listAll" resultType="ArticleVO" resultMap="ArticleResultMap">
         <![CDATA[
         SELECT article_no, title, content, writer, regdate, viewcnt
          FROM tbl_article WHERE article_no > 0 ORDER BY article_no DESC, regdate DESC

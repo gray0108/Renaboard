@@ -45,6 +45,13 @@
         ]]>
     </select>
 
+    <!-- 여기서는 resultMap이 필요없는 이유가 무엇일까? -->
+    <select id="countArticles" resultType="int">
+        <![CDATA[
+        SELECT COUNT(article_no) FROM tbl_article WHERE article_no > 0
+        ]]>
+    </select>
+
     <!-- VO의 필드변수명과, DB의 칼럼명이 다를때 처리방법 -->
     <resultMap id="ArticleResultMap" type="ArticleVO">
         <id property="articleNo" column="article_no"/>

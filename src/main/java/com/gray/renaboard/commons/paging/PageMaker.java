@@ -1,5 +1,8 @@
 package com.gray.renaboard.commons.paging;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMaker {
     private int totalCount;
     private int startPage;
@@ -28,6 +31,16 @@ public class PageMaker {
         }
         prev = startPage == 1 ? false : true;
         next = endPage * criteria.getPerPageNum() >= totalCount ? false : true;
+    }
+
+//    Paging Upgrade
+    public String makeQuery(int page) {
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .queryParam("page", page)
+                .queryParam("perPageNum", criteria.getPerPageNum())
+                .build();
+
+        return uriComponents.toUriString();
     }
 
     public int getTotalCount() {

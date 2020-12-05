@@ -15,4 +15,5 @@ public interface ArticleDAO {
     /* Paging process */
     public List<ArticleVO> listPaging(int page) throws Exception;
     public List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
+    int countArticles(Criteria criteria) throws Exception;
 }

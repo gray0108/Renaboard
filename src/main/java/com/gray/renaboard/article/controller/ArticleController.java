@@ -99,7 +99,9 @@ public class ArticleController {
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCriteria(criteria);
-        pageMaker.setTotalCount(1000);
+
+        //전체 게시글의 갯수 구하기
+        pageMaker.setTotalCount(articleService.countArticles(criteria));
 
         model.addAttribute("articles", articleService.listCriteria(criteria));
         model.addAttribute("pageMaker", pageMaker);

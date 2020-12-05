@@ -14,4 +14,5 @@ public interface ArticleService {
 
     /* Paging process */
     List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
+    int countArticles(Criteria criteria) throws Exception;
 }

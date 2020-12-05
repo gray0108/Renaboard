@@ -46,12 +46,13 @@
                             <tr>
                                 <td>${article.articleNo}</td>
                                 <%--<td><a href="${path}/article/read?articleNo=${article.articleNo}">${article.title}</a></td>--%>
-                                <%-- Paging Upgrade --%>
                                 <td>
-                                    <a href="${path}/article/read${pageMaker.makeQuery(pageMaker.criteria.page)}&articleNo=${article.articleNo}">
+                                    <a href="${path}/article/readPaging${pageMaker.makeQuery(pageMaker.criteria.page)}&articleNo=${article.articleNo}">
                                         ${article.title}
                                     </a>
                                 </td>
+                                <%-- Paging Upgrade Process by using javascript --%>
+
 
                                 <td>${article.writer}</td>
                                 <td><fmt:formatDate value="${article.regDate}" pattern="yyyy-MM-dd a HH:mm"/></td>
@@ -67,21 +68,29 @@
                             <c:if test="${pageMaker.prev}">
                                 <%-- Paging Upgrade --%>
                                 <%--<li><a href="${path}/article/listPaging?page=${pageMaker.startPage - 1}">이전</a></li>--%>
-                                <li><a href="${path}/article/listPaging${pageMaker.makeQuery(pageMaker.startPage - 1)}}">이전</a></li>
+                                <%--<li><a href="${path}/article/listPaging${pageMaker.makeQuery(pageMaker.startPage - 1)}}">이전</a></li>--%>
+                                <li><a href="${pageMaker.startPage -1}">이전</a></li>
                             </c:if>
                             <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
                                 <li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
                                         <%-- Paging Upgrade --%>
                                     <%--<a href="${path}/article/listPaging?page=${idx}">${idx}</a>--%>
-                                    <a href="${path}/article/listPaging${pageMaker.makeQuery(idx)}>${idx}"></a>
+                                    <%--<a href="${path}/article/listPaging${pageMaker.makeQuery(idx)}>${idx}"></a>--%>
+                                    <a href="${idx}">${idx}</a>
                                 </li>
                             </c:forEach>
                             <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                 <%-- Paging Upgrade --%>
                                 <%--<li><a href="${path}/article/listPaging?page=${pageMaker.endPage + 1}">다음</a></li>--%>
-                                <li><a href="${path}/article/listPaging?${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+                                <%--<li><a href="${path}/article/listPaging?${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>--%>
+                                <li><a href="${pageMaker.endPage + 1}">다음</a></li>
                             </c:if>
                         </ul>
+                        <form id="listPageForm">
+                            <input type="hidden" name="page" value="${pageMaker.criteria.page}">
+                            <input type="hidden" name="perPageNum" value="${pageMaker.criteria.perPageNum}">
+
+                        </form>
                     </div>
                 </div>
                 <div class="box-footer">
@@ -109,5 +118,26 @@
     } else if (result == "delSuccess") {
         alert("게시글 삭제가 완료되었습니다. ");
     }
+
+    $(".pagination li a").on("click", function (event) {
+        event.preventDefault();
+        let targetPage = $(this).attr("href");
+        let listPageForm = $("#listPageForm");
+        listPageForm.find("[name='page']").val(targetPage);
+        listPageForm.attr("action", "/article/listPaging").attr("method", "get");
+        listPageForm.submit();
+    });
+
+    /*실험 */
+    /*$(".move").on("click", function (e) {
+        e.preventDefault();
+        let listPageForm = $("#listPageForm");
+        let target = $(this).attr()
+        listPageForm.append("<input type='hidden' name='articleNo' value='" +$(this).attr("href")+"'>");
+        listPageForm.attr("action","/article/listPaging").attr("method", "get");
+        listPageForm.submit();
+
+    })*/
+
 </script>
 

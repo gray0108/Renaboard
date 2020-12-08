@@ -6,9 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../include/head.jsp"%>
-<%@ include file="../include/main_header.jsp"%>
-<%@ include file="../include/left_column.jsp"%>
+<%@ include file="../../include/head.jsp"%>
+<%@ include file="../../include/main_header.jsp"%>
+<%@ include file="../../include/left_column.jsp"%>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -45,7 +45,7 @@
                         <c:forEach items="${articles}" var="article">
                             <tr>
                                 <td>${article.articleNo}</td>
-                                <td><a href="${path}/article/read?articleNo=${article.articleNo}">${article.title}</a></td>
+                                <td><a href="${path}/article/basic/read?articleNo=${article.articleNo}">${article.title}</a></td>
                                 <td>${article.writer}</td>
                                 <td><fmt:formatDate value="${article.regDate}" pattern="yyyy-MM-dd a HH:mm"/></td>
                                 <td><span class="badge bg-red">${article.viewCnt}</span> </td>
@@ -68,8 +68,8 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<%@ include file="../include/main_footer.jsp"%>
-<%@ include file="../include/plugin_js.jsp"%>
+<%@ include file="../../include/main_footer.jsp"%>
+<%@ include file="../../include/plugin_js.jsp"%>
 <script>
     let result = "${msg}";
     if (result == "regSuccess") {

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: jiwoong
-  Date: 2020-12-03
-  Time: 오전 10:38
+  Date: 2020-12-05
+  Time: 오후 3:32
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,24 +13,28 @@
         console.log(formObj);
 
         $(".modBtn").on("click", function(){
-            formObj.attr("action", "/article/modify");
+            formObj.attr("action", "/article/paging/modify_paging");
             formObj.attr("method", "get");
             formObj.submit();
         });
 
         $(".delBtn").on("click", function(){
-            formObj.attr("action", "/article/remove");
+            formObj.attr("action", "/article/paging/remove_paging");
             formObj.submit();
         });
 
         $(".listBtn").on("click", function(){
-            self.location = "/article/list"
+            /*self.location = "/article/list"*/
+            //여기는 self.location에서 방법이 바뀐 이유가 무엇일까?
+            formObj.attr("method", "get");
+            formObj.attr("action", "/article/paging/list_paging");
+            formObj.submit();
         });
     })
 </script>
-<%@ include file="../include/head.jsp"%>
-<%@ include file="../include/main_header.jsp"%>
-<%@ include file="../include/left_column.jsp"%>
+<%@ include file="../../include/head.jsp"%>
+<%@ include file="../../include/main_header.jsp"%>
+<%@ include file="../../include/left_column.jsp"%>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -54,9 +58,10 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">글 제목 : ${article.title}</h3>
                 </div>
-                <div class="box-body" style="height: 700px">
-                    ${article.content}
-                </div>
+
+                <%-- text area 로 변경하기 : div태그에서 white-space:pre 스타일을 적용하면 textarea처럼 원본을 가져온다.
+                textarea 태그의 성질처럼 코드 내에 공백이 없어야 출력화면에 의도하지 않은 공백이 나타나지 않음. --%>
+                <div class="box-body" style="height: 700px; white-space:pre;">${article.content}</div>
                 <div class="box-footer">
                     <div class="user-block">
                         <img class="img-circle img-bordered-sm" src="/../dist/img/user1-128x128.jpg" alt="user image">
@@ -69,6 +74,9 @@
                 <div class="box-footer">
                     <form role="form" method="post">
                         <input type="hidden" name="articleNo" value="${article.articleNo}">
+                        <%-- page와 perPageNum 추가 --%>
+                        <input type="hidden" name="page" value="${criteria.page}">
+                        <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
                     </form>
                     <button type="submit" class="btn btn-primary listBtn"><i class="fa fa-list"></i>목록</button>
                     <div class="pull-right">
@@ -83,5 +91,5 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<%@ include file="../include/main_footer.jsp"%>
-<%@ include file="../include/plugin_js.jsp"%>
+<%@ include file="../../include/main_footer.jsp"%>
+<%@ include file="../../include/plugin_js.jsp"%>
